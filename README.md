@@ -1,5 +1,28 @@
-# Vue 3 + Vite
+# Quiz App
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A lightweight quiz & Q&A search app built with **Vue 3 + Vite**, designed for fast lookup and easy copy-to-clipboard — **no database required**.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+Live demo:  
+👉 https://dina-setiana.github.io/sl-quiz-app/
+
+---
+
+## ✨ Features
+
+- 🔍 Instant search (question or answer)
+- 📋 One-click **copy to clipboard**
+- 🧠 Auto-copy when only one result matches
+- 📄 Data stored in a simple **JSON file**
+- 🧾 Table-based UI for easy reading
+- 🚀 Auto-deploy to **GitHub Pages** via GitHub Actions
+- ⚡ Fast build with Vite
+
+---
+
+## 🛠 Tech Stack
+
+- **Vue 3** (Composition API)
+- **Vite**
+- **Bootstrap 5**
+- **Bootstrap Icons**
+- **GitHub Pages** (CI/CD with GitHub Actions)
