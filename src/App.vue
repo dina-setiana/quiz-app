@@ -12,7 +12,7 @@ const copyBtns = ref([])
 const fuse = ref(null)
 
 onMounted(async () => {
-  const res = await fetch("/quiz.json")
+  const res = await fetch(import.meta.env.BASE_URL + "quiz.json")
   qnaList.value = await res.json()
 
   fuse.value = new Fuse(qnaList.value, {
