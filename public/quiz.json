@@ -208,7 +208,6 @@
   { "question": "038", "answer": "15" },
   { "question": "chemical name salt", "answer": "Sodium chloride" },
   { "question": "female pilot", "answer": "Amelia Earhart" },
-  { "question": "forging", "answer": "Skill of Random Hammering" },
   { "question": "largest visceral organ", "answer": "Liver" },
   { "question": "maya civilization", "answer": "Hexadecimal" },
   { "question": "founder of modern olympic", "answer": "Pierre de Coubertin" },
@@ -220,5 +219,6 @@
   { "question": "title level 45", "answer": "Soul Sect" },
   { "question": "largest satelite", "answer": "Jupiter's Ganymede" },
   { "question": "telephone", "answer": "Alexander Bell" },
-  { "question": "c represent in computer", "answer": "Central processing unit" }
+  { "question": "c represent in computer", "answer": "Central processing unit" },
+  { "question": "digestive", "answer": "Small Intestine" }
 ]

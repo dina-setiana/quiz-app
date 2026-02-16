@@ -101,7 +101,7 @@ const showTooltip = (button) => {
     </div>
 
     <!-- Table -->
-    <div class="table-responsive">
+    <div class="table-responsive table-dark table-bordered table-striped align-middle">
       <table class="table table-bordered table-striped align-middle">
         <thead class="table-dark">
           <tr>
