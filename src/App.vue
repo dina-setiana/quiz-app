@@ -17,17 +17,28 @@ onMounted(async () => {
 
   fuse.value = new Fuse(qnaList.value, {
     keys: ["question", "answer"],
-    threshold: 0.35,        // lower = stricter, higher = fuzzier
-    ignoreLocation: true
+    threshold: 0.2,        // lower = stricter, higher = fuzzier
+    ignoreLocation: true,
+    minMatchCharLength: 3
   })
 })
 
 const filteredList = computed(() => {
   if (!search.value.trim()) return qnaList.value
 
-  return fuse.value
-    ? fuse.value.search(search.value).map(r => r.item)
-    : []
+  const keyword = search.value.toLowerCase().trim()
+
+  const exactMatches = qnaList.value.filter(item =>
+    item.question.toLowerCase().includes(keyword) ||
+    item.answer.toLowerCase().includes(keyword)
+  )
+
+  if (exactMatches.length > 0) {
+    return exactMatches
+  }
+
+  // 2️⃣ Fallback to Fuse (typo-friendly)
+  return fuse.search(keyword).map(r => r.item)
 })
 
 watch(filteredList, async (newList) => {
