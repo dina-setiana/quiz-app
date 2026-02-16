@@ -176,7 +176,7 @@
   { "question": "fastest heartrate hummingbird", "answer": "1000 times per minute" },
   { "question": "unrivaled serpent couple", "answer": "Dragon Elder" },
   { "question": "largest land animal", "answer": "African Elephant" },
-  { "question": "fastest bird", "answer": "Peregrine Falcon" },
+  { "question": "fastest bird", "answer": "Peregrine falcon" },
   { "question": "country iceland artic neigbour", "answer": "Greenland" },
   { "question": "what skin of human body", "answer": "The largest organ" },
   { "question": "jiang zhu spirit", "answer": "Healing Staff" },
@@ -219,5 +219,6 @@
   { "question": "third soul ring daimubai", "answer": "Varja Tiger" },
   { "question": "title level 45", "answer": "Soul Sect" },
   { "question": "largest satelite", "answer": "Jupiter's Ganymede" },
-  { "question": "telephone", "answer": "Alexander Bell" }
+  { "question": "telephone", "answer": "Alexander Bell" },
+  { "question": "c represent in computer", "answer": "Central processing unit" }
 ]
