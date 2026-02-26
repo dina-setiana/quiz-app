@@ -13,7 +13,6 @@
   { "question": "largest glacier", "answer": "Antarctica" },
   { "question": "sect lamp", "answer": "19" },
   { "question": "longest river in south america", "answer": "Amazon River" },
-  { "question": "pearl harbor incident", "answer": "1941" },
   { "question": "cannot lay egg", "answer": "Whales" },
   { "question": "highest element", "answer": "Hydrogen" },
   { "question": "longest organ", "answer": "Small intestine" },
@@ -177,7 +176,6 @@
   { "question": "unrivaled serpent couple", "answer": "Dragon Elder" },
   { "question": "largest land animal", "answer": "African Elephant" },
   { "question": "fastest bird", "answer": "Peregrine falcon" },
-  { "question": "country iceland artic neigbour", "answer": "Greenland" },
   { "question": "what skin of human body", "answer": "The largest organ" },
   { "question": "jiang zhu spirit", "answer": "Healing Staff" },
   { "question": "boiling water", "answer": "100°C" },
@@ -220,5 +218,10 @@
   { "question": "largest satelite", "answer": "Jupiter's Ganymede" },
   { "question": "telephone", "answer": "Alexander Bell" },
   { "question": "c represent in computer", "answer": "Central processing unit" },
-  { "question": "digestive", "answer": "Small Intestine" }
+  { "question": "digestive", "answer": "Small Intestine" },
+  { "question": "water element", "answer": "Hydrogen and oxygen" },
+  { "question": "Thank you, Sanpao!", "answer": "Thank you, Sanpao!" }
+  { "question": "narepresent", "answer": "Sodium" }
+  { "question": "altair", "answer": "Aquila Constellation" }
+
 ]
