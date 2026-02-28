@@ -182,7 +182,6 @@
   { "question": "country highest pyramid", "answer": "Sudan" },
   { "question": "largest shark", "answer": "Whale Shark" },
   { "question": "divinde comedy author", "answer": "Dante" },
-  { "question": "main metabolic organ human", "answer": "Liver" },
   { "question": "white tiger belong to", "answer": "Evil Eye White Tiger" },
   { "question": "nobel prize women", "answer": "Marie Curie" },
   { "question": "seven wonders egypt", "answer": "The Great Pyramid of Giza" },
@@ -190,7 +189,6 @@
   { "question": "watergate scandal", "answer": "Nixon" },
   { "question": "planet most satelite", "answer": "Jupiter" },
   { "question": "big apple city", "answer": "New York City" },
-  { "question": "main metabolic human body", "answer": "Liver" },
   { "question": "nrr celestial item", "answer": "Silk Woven Tulip" },
   { "question": "TangSan first gift to XiaoWu", "answer": "Silent Sleeve Arrow" },
   { "question": "Trojan Horse originated from:", "answer": "Trojan War" },
@@ -220,8 +218,10 @@
   { "question": "c represent in computer", "answer": "Central processing unit" },
   { "question": "digestive", "answer": "Small Intestine" },
   { "question": "water element", "answer": "Hydrogen and oxygen" },
-  { "question": "Thank you, Sanpao!", "answer": "Thank you, Sanpao!" }
-  { "question": "narepresent", "answer": "Sodium" }
-  { "question": "altair", "answer": "Aquila Constellation" }
+  { "question": "Thank you, Sanpao!", "answer": "Thank you, Sanpao!" },
+  { "question": "narepresent", "answer": "Sodium" },
+  { "question": "altair", "answer": "Aquila Constellation" },
+  { "question": "largest city Australia", "answer": "Sydney" }
+  { "question": "Blood type aboab", "answer": "Type A, B, O, Ab" }
 
 ]
