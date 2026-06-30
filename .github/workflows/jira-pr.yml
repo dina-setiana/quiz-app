@@ -1,0 +1,55 @@
+name: Jira PR Automation
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+      - review_requested
+      - review_request_removed
+      - ready_for_review
+      - converted_to_draft
+
+jobs:
+  jira:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dump payload
+        run: |
+          cat $GITHUB_EVENT_PATH
+      - name: Print Event
+        run: |
+          echo "Action: ${{ github.event.action }}"
+          echo "Branch: ${{ github.head_ref }}"
+          echo "Title: ${{ github.event.pull_request.title }}"
+          echo "Author: ${{ github.actor }}"
+      - name: Extract Jira Key
+        id: jira
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          KEY=$(echo "$BRANCH" | grep -oE '[A-Z]+-[0-9]+' || true)
+          echo "jira_key=$KEY" >> "$GITHUB_OUTPUT"
+      - name: Opened
+        if: github.event.action == 'opened'
+        run: echo "PR Opened"
+      
+      - name: Review Requested
+        if: github.event.action == 'review_requested'
+        run: echo "Review Requested"
+      
+      - name: Review Removed
+        if: github.event.action == 'review_request_removed'
+        run: echo "Review Removed"
+      
+      - name: Draft
+        if: github.event.action == 'converted_to_draft'
+        run: echo "Converted to Draft"
+      
+      - name: Ready
+        if: github.event.action == 'ready_for_review'
+        run: echo "Ready for Review"
+      - name: Merged
+        if: github.event.action == 'closed' && github.event.pull_request.merged == true
+        run: echo "Merged!"
