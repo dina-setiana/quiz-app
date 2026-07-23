@@ -16,111 +16,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Dump payload
-        run: |
-          cat $GITHUB_EVENT_PATH
-      - name: Print Event
-        run: |
-          echo "Action: ${{ github.event.action }}"
-          echo "Branch: ${{ github.head_ref }}"
-          echo "Title: ${{ github.event.pull_request.title }}"
-          echo "Author: ${{ github.actor }}"
-      - name: Opened
-        if: github.event.action == 'opened'
-        run: echo "PR Opened"
-      
-      - name: Review Requested
-        if: github.event.action == 'review_requested'
-        run: echo "Review Requested"
-      
-      - name: Review Removed
-        if: github.event.action == 'review_request_removed'
-        run: echo "Review Removed"
-      
-      - name: Draft
-        if: github.event.action == 'converted_to_draft'
-        run: echo "Converted to Draft"
-      
-      - name: Ready
-        if: github.event.action == 'ready_for_review'
-        run: echo "Ready for Review"
-      - name: Merged
-        if: github.event.action == 'closed' && github.event.pull_request.merged == true
-        run: echo "Merged!"
+      - uses: actions/checkout@v4
 
-  extract-jira:
-    runs-on: ubuntu-latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-    steps:
-      - name: Extract Jira Issue Key
-        id: jira
-        shell: bash
-        run: |
+      - run: npm ci
 
-          BRANCH="${{ github.head_ref }}"
-          TITLE="${{ github.event.pull_request.title }}"
-
-          echo "Branch: $BRANCH"
-          echo "Title : $TITLE"
-
-          KEY=$(echo "$BRANCH" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -1)
-
-          if [ -z "$KEY" ]; then
-            echo "No Jira key found in branch."
-            KEY=$(echo "$TITLE" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -1)
-          fi
-
-          if [ -z "$KEY" ]; then
-            echo "No Jira ticket found."
-            exit 1
-          fi
-
-          echo "Found Jira ticket: $KEY"
-
-          echo "jira_key=$KEY" >> "$GITHUB_OUTPUT"
-
-      - name: Print Result
-        run: |
-          echo "Ticket = ${{ steps.jira.outputs.jira_key }}"
-
-      - name: Comment on Jira Issue
+      - run: node scripts/index.js
         env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-        if: steps.jira.outputs.jira_key != ''
-        run: |
-      
-          ISSUE="${{ steps.jira.outputs.jira_key }}"
-      
-          jq -n \
-            --arg msg "🚀 Pull Request Opened" \
-            --arg pr "${{ github.event.pull_request.html_url }}" \
-            '
-            {
-              body: {
-                type: "doc",
-                version: 1,
-                content: [
-                  {
-                    type: "paragraph",
-                    content: [
-                      {
-                        type: "text",
-                        text: ($msg + "\n" + $pr)
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-            ' > comment.json
-
-          cat comment.json
-      
-          curl \
-            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            -X POST \
-            -H "Content-Type: application/json" \
-            --data @comment.json \
-            "$JIRA_BASE_URL/rest/api/3/issue/$ISSUE/comment"
