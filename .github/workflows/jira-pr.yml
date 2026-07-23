@@ -22,8 +22,6 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm ci
-
       - run: node scripts/index.js
         env:
           GITHUB_EVENT_PATH: ${{ github.event_path }}

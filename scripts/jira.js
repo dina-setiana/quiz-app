@@ -1,6 +1,8 @@
 const axios = require('axios');
 
 async function addComment(issueKey, comment) {
+  const url = `${process.env.JIRA_BASE_URL}/rest/api/3/issue/${issueKey}/comment`;
+  const auth = Buffer.from(`${process.env.JIRA_EMAIL}:${process.env.JIRA_API_TOKEN}`).toString('base64');
   const body = {
     body: {
       type: 'doc',
@@ -19,18 +21,22 @@ async function addComment(issueKey, comment) {
     },
   };
 
-  const response = await axios.post(`${process.env.JIRA_BASE_URL}/rest/api/3/issue/${issueKey}/comment`, body, {
-    auth: {
-      username: process.env.JIRA_EMAIL,
-      password: process.env.JIRA_API_TOKEN
-    },
+  const response = await fetch(url, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    }
+      "Authorization": `Basic ${auth}`,
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
   });
 
-  return response.data;
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(error);
+  }
+
+  return response.json();
 }
 
 module.exports = {
