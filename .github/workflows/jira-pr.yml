@@ -93,21 +93,34 @@ jobs:
       
           ISSUE="${{ steps.jira.outputs.jira_key }}"
       
-          COMMENT=$(jq -n \
+          jq -n \
+            --arg msg "🚀 Pull Request Opened" \
             --arg pr "${{ github.event.pull_request.html_url }}" \
-            --arg title "${{ github.event.pull_request.title }}" \
-            --arg user "${{ github.actor }}" \
-            '{
-              body:
-                ("🚀 Jira Automation Comment\n\n"
-                + "Title: " + $title + "\n"
-                + "Author: " + $user + "\n"
-                + "PR: " + $pr)
-            }')
+            '
+            {
+              body: {
+                type: "doc",
+                version: 1,
+                content: [
+                  {
+                    type: "paragraph",
+                    content: [
+                      {
+                        type: "text",
+                        text: ($msg + "\n" + $pr)
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+            ' > comment.json
+
+          cat comment.json
       
           curl \
-            --request POST \
-            --url "$JIRA_BASE_URL/rest/api/3/issue/$ISSUE/comment" \
-            --user "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            --header "Content-Type: application/json" \
-            --data "$COMMENT"
+            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            -X POST \
+            -H "Content-Type: application/json" \
+            --data @comment.json \
+            "$JIRA_BASE_URL/rest/api/3/issue/$ISSUE/comment"
