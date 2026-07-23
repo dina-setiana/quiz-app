@@ -82,3 +82,32 @@ jobs:
       - name: Print Result
         run: |
           echo "Ticket = ${{ steps.jira.outputs.jira_key }}"
+
+      - name: Comment on Jira Issue
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        if: steps.jira.outputs.jira_key != ''
+        run: |
+      
+          ISSUE="${{ steps.jira.outputs.jira_key }}"
+      
+          COMMENT=$(jq -n \
+            --arg pr "${{ github.event.pull_request.html_url }}" \
+            --arg title "${{ github.event.pull_request.title }}" \
+            --arg user "${{ github.actor }}" \
+            '{
+              body:
+                ("🚀 Jira Automation Comment\n\n"
+                + "Title: " + $title + "\n"
+                + "Author: " + $user + "\n"
+                + "PR: " + $pr)
+            }')
+      
+          curl \
+            --request POST \
+            --url "$JIRA_BASE_URL/rest/api/3/issue/$ISSUE/comment" \
+            --user "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            --header "Content-Type: application/json" \
+            --data "$COMMENT"
