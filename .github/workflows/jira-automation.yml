@@ -1,0 +1,61 @@
+name: Jira PR Automation
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - closed
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+
+  pull_request_review:
+    types:
+      - submitted
+      - dismissed
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  jira:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout automation repository
+        uses: actions/checkout@v4
+        with:
+          repository: dina-setiana/github-jira-automation
+          ref: main
+          path: automation
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: automation/package-lock.json
+
+      - name: Install dependencies
+        working-directory: automation
+        run: npm ci
+
+      - name: Run GitHub → Jira Automation
+        working-directory: automation
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_ACTOR: ${{ github.actor }}
+
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+        run: node src/index.js
